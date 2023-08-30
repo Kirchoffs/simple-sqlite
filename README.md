@@ -9,6 +9,24 @@ Reference: https://cstack.github.io/db_tutorial/
 >> ./simpleSQLite
 ```
 
+## Test
+```
+db > insert 1 ben ben@gmail.com
+Executed.
+
+db > insert 2 tom tom@yahoo.com
+Executed.
+
+db > select
+(1, ben, ben@gmail.com)
+(2, tom, tom@yahoo.com)
+Executed.
+```
+
+## Project Related
+Basic Steps:
+Read Input -> Execute Meta Command -> Prepare Statement -> Execute Statement
+
 ## C Knowledge
 ### ssize_t
 ssize_t is a data type commonly used in programming to represent sizes or counts of bytes. It stands for "signed size type". It's often used when dealing with functions or operations that involve reading or writing data, such as file I/O or memory operations.
@@ -16,6 +34,11 @@ ssize_t is a data type commonly used in programming to represent sizes or counts
 The key feature of ssize_t is that it's a signed integer type, which means it can represent both positive and negative values. This is important because functions that return sizes or counts might use negative values to indicate errors or special conditions.
 
 For example, in C programming, when you're working with functions like read() or write() for reading from or writing to files or sockets, the return type is often ssize_t. Similarly, the fread() and fwrite() functions for reading and writing data from and to streams also use ssize_t to indicate the number of bytes read or written.
+
+### Calculate the size of a struct
+```
+sizeof(((Struct*)0)->Attribute)
+```
 
 ### How to handle command input
 ```
