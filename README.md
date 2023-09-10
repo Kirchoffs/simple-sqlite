@@ -10,6 +10,7 @@ Reference: https://cstack.github.io/db_tutorial/
 ```
 
 ## Test
+### Basic
 ```
 db > insert 1 ben ben@gmail.com
 Executed.
@@ -23,9 +24,44 @@ db > select
 Executed.
 ```
 
+### Test with RSpec
+```
+>> bundle init
+```
+Add `gem 'rspec'` in the file Gemfile, then run `bundle install`:
+```
+>> bundle install
+```
+
+Create a new file `spec/db_test_spec.rb` and run the test:
+```
+>> bundle exec rspec
+```
+
 ## Project Related
+### Structure
 Basic Steps:
 Read Input -> Execute Meta Command -> Prepare Statement -> Execute Statement
+
+### Parse Input
+Version 1:
+```
+int args_assigned = sscanf(
+    input_buffer->buffer, 
+    "insert %d %s %s", 
+    &(statement->row_to_insert.id),
+    statement->row_to_insert.username, 
+    statement->row_to_insert.email
+);
+```
+
+Version 2:
+```
+char* keyword = strtok(input_buffer->buffer, " ");
+char* id_string = strtok(NULL, " ");
+char* username = strtok(NULL, " ");
+char* email = strtok(NULL, " ");
+```
 
 ## C Knowledge
 ### ssize_t
