@@ -1,7 +1,15 @@
 describe 'database' do
+    before do
+        `rm -rf test.db`
+    end
+
+    after do
+        `rm -rf test.db`
+    end
+
     def run_script(commands)
         raw_output = nil
-        IO.popen("./build/simpleSQLite", "r+") do |pipe|
+        IO.popen("./build/simpleSQLite test.db", "r+") do |pipe|
             commands.each do |command|
                 pipe.puts command
             end
@@ -38,7 +46,7 @@ describe 'database' do
     end
 
     it 'allows inserting strings that are the maximum length' do
-        long_username = "a" * 32
+        long_username = "a" * 31
         long_email = "a" * 255
         script = [
             "insert 1 #{long_username} #{long_email}",
@@ -55,7 +63,7 @@ describe 'database' do
     end
 
     it 'prints error message if strings are too long' do
-        long_username = "a" * 33
+        long_username = "a" * 32
         long_email = "a" * 256
         script = [
             "insert 1 #{long_username} #{long_email}",
@@ -80,6 +88,26 @@ describe 'database' do
         expect(result).to match_array([
             "db > ID must be positive.",
             "db > Executed.",
+            "db > ",
+        ])
+    end
+
+    it 'keeps data after closing connection' do
+        result1 = run_script([
+            "insert 1 user1 person1@example.com",
+            ".exit",
+        ])
+        expect(result1).to match_array([
+            "db > Executed.",
+            "db > ",
+        ])
+        result2 = run_script([
+            "select",
+            ".exit",
+        ])
+        expect(result2).to match_array([
+            "db > (1, user1, person1@example.com)",
+            "Executed.",
             "db > ",
         ])
     end
