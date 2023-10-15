@@ -11,6 +11,10 @@ typedef enum {
     NODE_LEAF 
 } NodeType;
 
+NodeType get_node_type(uint8_t* node);
+
+void set_node_type(void* node, NodeType type);
+
 uint32_t* leaf_node_num_cells(uint8_t* node);
 
 uint8_t* leaf_node_cell(uint8_t* node, uint32_t cell_num);

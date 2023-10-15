@@ -4,6 +4,16 @@
 #include <stdio.h>
 #include <string.h>
 
+NodeType get_node_type(uint8_t* node) {
+    uint8_t value = *((uint8_t*)(node + NODE_TYPE_OFFSET));
+    return (NodeType)value;
+}
+
+void set_node_type(void* node, NodeType type) {
+    uint8_t value = type;
+    *((uint8_t*)(node + NODE_TYPE_OFFSET)) = value;
+}
+
 uint32_t* leaf_node_num_cells(uint8_t* node) {
     return (uint32_t*)(node + LEAF_NODE_NUM_CELLS_OFFSET);
 }
@@ -21,6 +31,7 @@ uint8_t* leaf_node_value(uint8_t* node, uint32_t cell_num) {
 }
 
 void initialize_leaf_node(uint8_t* node) {
+    set_node_type(node, NODE_LEAF);
     *leaf_node_num_cells(node) = 0;
 }
 
@@ -41,7 +52,7 @@ void leaf_node_insert(Cursor* cursor, uint32_t key, Row* value) {
 
     *(leaf_node_num_cells(node)) += 1;
     *(leaf_node_key(node, cursor->cell_num)) = key;
-    serialize_row(value, (char*) leaf_node_value(node, cursor->cell_num));
+    serialize_row(value, (char*)leaf_node_value(node, cursor->cell_num));
 }
 
 void print_leaf_node(uint8_t* node) {

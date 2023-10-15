@@ -28,6 +28,7 @@ PrepareResult prepare_insert_statement(InputBuffer* input_buffer, Statement* sta
 
 typedef enum { 
     EXECUTE_SUCCESS, 
+    EXECUTE_DUPLICATE_KEY,
     EXECUTE_TABLE_FULL 
 } ExecuteResult;
 
