@@ -80,7 +80,7 @@ ExecuteResult execute_insert(Statement* statement, Table* table) {
 
     free(cursor);
     
-    return EXECUTE_SUCCESS;
+    return insert_result;
 }
 
 ExecuteResult execute_select(Statement* statement, Table* table) {
