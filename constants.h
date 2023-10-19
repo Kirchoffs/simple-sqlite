@@ -54,5 +54,29 @@ extern const uint32_t LEAF_NODE_VALUE_OFFSET;
 extern const uint32_t LEAF_NODE_CELL_SIZE;
 extern const uint32_t LEAF_NODE_SPACE_FOR_CELLS;
 extern const uint32_t LEAF_NODE_MAX_CELLS;
+const uint32_t LEAF_NODE_RIGHT_SPLIT_COUNT;
+const uint32_t LEAF_NODE_LEFT_SPLIT_COUNT;
+
+/**
+ * 
+ * Internal Node Header Layout
+ * 
+ */
+
+const uint32_t INTERNAL_NODE_NUM_KEYS_SIZE;
+const uint32_t INTERNAL_NODE_NUM_KEYS_OFFSET;
+const uint32_t INTERNAL_NODE_RIGHT_CHILD_SIZE;
+const uint32_t INTERNAL_NODE_RIGHT_CHILD_OFFSET;
+const uint32_t INTERNAL_NODE_HEADER_SIZE;
+
+/**
+ * 
+ * Internal Node Body Layout
+ * 
+ */
+
+const uint32_t INTERNAL_NODE_CHILD_SIZE;
+const uint32_t INTERNAL_NODE_KEY_SIZE;
+const uint32_t INTERNAL_NODE_CELL_SIZE;
 
 #endif

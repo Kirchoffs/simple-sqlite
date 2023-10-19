@@ -64,9 +64,6 @@ ExecuteResult execute_statement(Statement* statement, Table* table) {
 ExecuteResult execute_insert(Statement* statement, Table* table) {
     uint8_t* node = get_page(table->pager, table->root_page_num);
     uint32_t num_cells = *leaf_node_num_cells(node);
-    if (num_cells >= LEAF_NODE_MAX_CELLS) {
-        return EXECUTE_TABLE_FULL;
-    }
 
     Row* row_to_insert = &(statement->row_to_insert);
     uint32_t key_to_insert = row_to_insert->id;
@@ -79,7 +76,7 @@ ExecuteResult execute_insert(Statement* statement, Table* table) {
         }
     }
 
-    leaf_node_insert(cursor, row_to_insert->id, row_to_insert);
+    ExecuteResult insert_result = leaf_node_insert(cursor, row_to_insert->id, row_to_insert);
 
     free(cursor);
     
