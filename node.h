@@ -22,6 +22,8 @@ void set_node_root(uint8_t* node, bool is_root);
 
 uint32_t* leaf_node_num_cells(uint8_t* node);
 
+uint32_t* leaf_node_next_leaf(void* node);
+
 uint8_t* leaf_node_cell(uint8_t* node, uint32_t cell_num);
 
 uint32_t* leaf_node_key(uint8_t* node, uint32_t cell_num);

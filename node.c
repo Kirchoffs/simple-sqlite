@@ -28,6 +28,10 @@ uint32_t* leaf_node_num_cells(uint8_t* node) {
     return (uint32_t*)(node + LEAF_NODE_NUM_CELLS_OFFSET);
 }
 
+uint32_t* leaf_node_next_leaf(void* node) {
+    return node + LEAF_NODE_NEXT_LEAF_OFFSET;
+}
+
 uint8_t* leaf_node_cell(uint8_t* node, uint32_t cell_num) {
     return node + LEAF_NODE_HEADER_SIZE + cell_num * LEAF_NODE_CELL_SIZE;
 }
@@ -44,6 +48,7 @@ void initialize_leaf_node(uint8_t* node) {
     set_node_type(node, NODE_LEAF);
     set_node_root(node, false);
     *leaf_node_num_cells(node) = 0;
+    *leaf_node_next_leaf(node) = 0;
 }
 
 uint32_t get_unused_page_num(Pager* pager) { 
@@ -76,6 +81,8 @@ ExecuteResult leaf_node_split_and_insert(Cursor* cursor, uint32_t key, Row* valu
     uint32_t new_page_num = get_unused_page_num(cursor->table->pager);
     uint8_t* new_node = get_page(cursor->table->pager, new_page_num);
     initialize_leaf_node(new_node);
+    *leaf_node_next_leaf(new_node) = *leaf_node_next_leaf(old_node);
+    *leaf_node_next_leaf(old_node) = new_page_num;
 
     // Process totally LEAF_NODE_MAX_CELLS + 1 cells
     for (int32_t i = LEAF_NODE_MAX_CELLS; i >= 0; i--) {
@@ -90,7 +97,8 @@ ExecuteResult leaf_node_split_and_insert(Cursor* cursor, uint32_t key, Row* valu
         uint8_t* destination = leaf_node_cell(destination_node, index_within_node);
 
         if (i == cursor->cell_num) {
-            serialize_row(value, (char*)destination);
+            serialize_row(value, (char*)leaf_node_value(destination_node, index_within_node));
+            *leaf_node_key(destination_node, index_within_node) = key;
         } else if (i > cursor->cell_num) {
             memcpy(destination, leaf_node_cell(old_node, i - 1), LEAF_NODE_CELL_SIZE);
         } else {
