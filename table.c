@@ -22,11 +22,13 @@ Pager* pager_open(const char* filename) {
     pager->file_length = file_length;
     pager->num_pages = file_length / PAGE_SIZE;
 
+    // Check
     if (file_length % PAGE_SIZE != 0) {
         printf("DB file is not a whole number of pages. Corrupt file.\n");
         exit(EXIT_FAILURE);
     }
 
+    // Initialize pages with NULL
     for (uint32_t i = 0; i < TABLE_MAX_PAGES; i++) {
         pager->pages[i] = NULL;
     }
@@ -67,6 +69,7 @@ uint8_t* get_page(Pager* pager, uint32_t page_num) {
             num_pages += 1;
         }
 
+        // If it is an old page, read from file
         if (page_num < num_pages) {
             lseek(pager->file_descriptor, page_num * PAGE_SIZE, SEEK_SET);
             ssize_t bytes_read = read(pager->file_descriptor, page, PAGE_SIZE);
