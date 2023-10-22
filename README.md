@@ -205,6 +205,9 @@ The whence flag can be one of the following values:
 In GCC, sizeof(void) is 1. So, if we increment a void pointer, it will be incremented by 1 byte.  
 However, I prefer uint8_t* to void*, which is more platform-independent.
 
+In the project, uint8_t* refer to the address of the node, uint32_t refer to the page number of the node, and  
+uint32_t* refer to the cell inside a node.
+
 ## DB Knowledge
 ### SQList Architecture
 #### Architecture

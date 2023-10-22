@@ -13,7 +13,7 @@ void cursor_advance(Cursor* cursor) {
     uint8_t* node = get_page(cursor->table->pager, page_num);
     cursor->cell_num += 1;
     if (cursor->cell_num >= (*leaf_node_num_cells(node))) {
-        uint32_t next_page_num = *leaf_node_next_leaf(node);
+        uint32_t next_page_num = *leaf_node_next_leaf_page_num(node);
         if (next_page_num == 0) {
             cursor->end_of_table = true;
         } else {
@@ -73,7 +73,7 @@ Cursor* internal_node_find(Table* table, uint32_t page_num, uint32_t key) {
     uint8_t* node = get_page(table->pager, page_num);
 
     uint32_t child_index = internal_node_find_child(node, key);
-    uint32_t child_page_num = *internal_node_child(node, child_index);
+    uint32_t child_page_num = *internal_node_child_page_num(node, child_index);
     uint8_t* child_page = get_page(table->pager, child_page_num);
     switch (get_node_type(child_page)) {
         case NODE_LEAF:

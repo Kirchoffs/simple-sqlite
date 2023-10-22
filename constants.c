@@ -2,7 +2,7 @@
 #include "row.h"
 #include <stdlib.h>
 
-const uint32_t TABLE_MAX_PAGES = 100;
+const uint32_t TABLE_MAX_PAGES = 400;
 const uint32_t PAGE_SIZE = 4096;
 
 #define size_of_attribute(Struct, Attribute) sizeof(((Struct*) 0)->Attribute)
@@ -82,4 +82,4 @@ const uint32_t INTERNAL_NODE_CHILD_OFFSET = 0;
 const uint32_t INTERNAL_NODE_KEY_SIZE = sizeof(uint32_t);
 const uint32_t INTERNAL_NODE_KEY_OFFSET = INTERNAL_NODE_CHILD_OFFSET + INTERNAL_NODE_CHILD_SIZE;
 const uint32_t INTERNAL_NODE_CELL_SIZE = INTERNAL_NODE_CHILD_SIZE + INTERNAL_NODE_KEY_SIZE;
-const uint32_t INTERNAL_NODE_MAX_CELLS = 3;
+const uint32_t INTERNAL_NODE_MAX_KEYS = 3;

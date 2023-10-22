@@ -3,4 +3,3 @@ RSpec.configure do |config|
         RSpec::Support::ObjectFormatter.default_instance.max_formatted_output_length = nil
     end
 end
-  

@@ -8,7 +8,7 @@ typedef struct {
     int file_descriptor;
     uint32_t file_length;
     uint32_t num_pages;
-    uint8_t* pages[100];
+    uint8_t* pages[400];
 } Pager;
 
 typedef struct {
